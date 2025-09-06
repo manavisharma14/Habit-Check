@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* globals.css */
+body {
+  @apply bg-[#F8EFDA]; /* your vanilla/matcha-beige shade */
+}
