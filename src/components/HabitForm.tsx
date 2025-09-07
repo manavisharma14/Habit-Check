@@ -26,7 +26,7 @@ export default function HabitForm({
       if (onAdded) onAdded(newHabit);
 
       setHabit("");
-      inputRef.current?.focus(); // 👈 keep typing flow smooth
+      inputRef.current?.focus();
     } catch (error) {
       console.error("Error adding habit:", error);
     }
@@ -35,7 +35,7 @@ export default function HabitForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex gap-3 bg-[#F8DCD9]/20 p-3 rounded-xl border border-[#939D7A]/20 shadow-sm"
+      className="flex gap-3 bg-[#F9FAFB] p-3 rounded-xl border border-[#49596B]/20 shadow-sm"
     >
       <input
         ref={inputRef}
@@ -43,13 +43,13 @@ export default function HabitForm({
         placeholder="✨ Add a new habit..."
         value={habit}
         onChange={(e) => setHabit(e.target.value)}
-        className="flex-1 border border-[#939D7A]/30 rounded-lg px-3 py-2 bg-white/60 
-                   text-gray-700 placeholder:text-gray-400 
-                   focus:outline-none focus:ring-2 focus:ring-[#939D7A]/60 focus:bg-white"
+        className="flex-1 border border-[#49596B]/30 rounded-lg px-3 py-2 bg-white 
+                   text-[#49596B] placeholder:text-[#9CA3AF]
+                   focus:outline-none focus:ring-2 focus:ring-[#49596B]/50 focus:bg-white"
       />
       <button
         type="submit"
-        className="bg-[#939D7A] hover:bg-[#6E7B52] text-white px-5 py-2 rounded-lg shadow-md 
+        className="bg-[#49596B] hover:bg-[#3b4757] text-white px-5 py-2 rounded-lg shadow-md 
                    transition-all active:scale-95"
       >
         Add

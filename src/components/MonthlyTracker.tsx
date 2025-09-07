@@ -39,7 +39,6 @@ export default function MonthlyTracker({
         const grouped: Record<string, Set<number>> = {};
 
         data.forEach((p: any) => {
-          // p.date is ISO; use UTC getters to avoid timezone shifts
           const d = new Date(p.date);
           const y = d.getUTCFullYear();
           const m = d.getUTCMonth();
@@ -97,40 +96,42 @@ export default function MonthlyTracker({
   }));
 
   return (
-    <div className="mt-10 max-w-6xl mx-auto bg-white rounded-2xl shadow-md p-6 border border-gray-200">
+    <div className="mt-10 max-w-6xl mx-auto bg-[#FAFAF7] rounded-2xl shadow-md p-6 border border-[#49596B]/30">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-[#7A8450]">Monthly Tracker</h2>
+        <h2 className="text-xl font-bold text-[#49596B]">Monthly Tracker</h2>
         <div className="flex items-center gap-2">
           <select
             value={month}
             onChange={(e) => setMonth(Number(e.target.value))}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-gray-50 text-gray-700 focus:ring-2 focus:ring-[#7A8450]"
+            className="border border-[#49596B] rounded-lg px-3 py-2 text-sm bg-[#FAFAF7] text-[#49596B] focus:ring-2 focus:ring-[#49596B]"
           >
             {monthNames.map((m, i) => (
-              <option key={i} value={i}>{m}</option>
+              <option key={i} value={i} className="bg-[#FAFAF7] text-[#49596B]">
+                {m}
+              </option>
             ))}
           </select>
-          <span className="font-medium text-gray-600">{year}</span>
+          <span className="font-medium text-[#49596B]">{year}</span>
         </div>
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-lg border border-gray-200">
+      <div className="overflow-x-auto rounded-lg border border-[#49596B]/40">
         <table className="table-fixed w-full text-sm border-collapse">
-          <thead className="bg-gray-100">
+          <thead className="bg-[#49596B]">
             <tr>
-              <th className="px-3 py-2 text-center w-12 font-semibold text-gray-700">Day</th>
+              <th className="px-3 py-2 text-center w-12 font-semibold text-[#FAFAF7]">Day</th>
               {habits.map((h) => (
                 <th
                   key={h.id}
-                  className="px-3 py-2 text-center w-28 truncate text-gray-700 font-medium"
+                  className="px-3 py-2 text-center w-28 truncate font-medium text-[#FAFAF7]"
                   title={h.name}
                 >
                   {h.name}
                 </th>
               ))}
-              <th className="px-3 py-2 text-center w-24 text-gray-700 font-medium">Progress</th>
+              <th className="px-3 py-2 text-center w-24 font-medium text-[#FAFAF7]">Progress</th>
             </tr>
           </thead>
           <tbody>
@@ -138,34 +139,26 @@ export default function MonthlyTracker({
               const day = i + 1;
               const dailyProgress = getDailyProgress(day);
               return (
-                <tr key={day} className={i % 2 === 0 ? "bg-gray-50" : "bg-white"}>
-                  <td className="px-3 py-2 text-center font-medium text-gray-600">{day}</td>
+                <tr key={day} className={i % 2 === 0 ? "bg-[#FFFFFF]" : "bg-[#FAFAF7]"}>
+                  <td className="px-3 py-2 text-center font-medium text-[#49596B]">{day}</td>
                   {habits.map((h) => (
                     <td key={h.id} className="text-center">
                       <input
                         type="checkbox"
                         checked={progress[h.id]?.has(day) || false}
                         onChange={() => toggleDay(h.id, day)}
-                        className="h-4 w-4 text-[#7A8450] rounded accent-[#7A8450] cursor-pointer"
+                        className="h-4 w-4 accent-[#49596B] cursor-pointer"
                       />
                     </td>
                   ))}
                   <td className="px-2 py-1 text-center">
-                    <div className="w-full bg-gray-200 rounded-full h-3">
+                    <div className="w-full bg-[#FAFAF7] border border-[#49596B]/40 rounded-full h-3">
                       <div
-                        className="h-3 rounded-full transition-all duration-300"
-                        style={{
-                          width: `${dailyProgress}%`,
-                          backgroundColor:
-                            dailyProgress >= 70
-                              ? "#7A8450"
-                              : dailyProgress >= 30
-                              ? "#D9B650"
-                              : "#F8DCD9",
-                        }}
+                        className="h-3 rounded-full transition-all duration-300 bg-[#49596B]"
+                        style={{ width: `${dailyProgress}%` }}
                       />
                     </div>
-                    <span className="text-xs text-gray-500">{dailyProgress}%</span>
+                    <span className="text-xs text-[#49596B]">{dailyProgress}%</span>
                   </td>
                 </tr>
               );
@@ -174,8 +167,8 @@ export default function MonthlyTracker({
         </table>
       </div>
 
-
-      <div className="mt-8 bg-white rounded-xl shadow p-4 border border-gray-200">
+      {/* Chart */}
+      <div className="mt-8 bg-[#FAFAF7] rounded-xl shadow p-4 border border-[#49596B]/30">
         <ProgressChart data={chartData} />
       </div>
     </div>

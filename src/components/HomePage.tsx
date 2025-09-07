@@ -26,19 +26,19 @@ export default function HomePage() {
     setHabits((prev) => [...prev, habit]);
   };
 
-  const handleHabitDeleted = (id: string) => {   // ✅ id is string
+  const handleHabitDeleted = (id: string) => {
     setHabits((prev) => prev.filter((h) => h.id !== id));
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F8EFDA] to-[#F3E8C8] px-6 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-[#F9FAFB] to-[#F3F4F6] px-6 py-12">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <header className="mb-12 text-center">
-          <h1 className="text-5xl font-extrabold text-[#7A8450] tracking-tight">
+          <h1 className="text-5xl font-extrabold text-[#49596B] tracking-tight">
             Habit Tracker
           </h1>
-          <p className="text-[#5C5136] mt-3 text-lg">
+          <p className="text-[#49596B]/80 mt-3 text-lg">
             Build better habits, one day at a time ✨
           </p>
         </header>
@@ -46,16 +46,16 @@ export default function HomePage() {
         {/* Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* Habit Form */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-md p-6 border border-[#7A8450]/10 hover:shadow-lg hover:-translate-y-0.5 transition">
-            <h2 className="text-lg font-semibold text-[#7A8450] mb-4">
+          <div className="bg-white rounded-2xl shadow-md p-6 border border-[#49596B]/10 hover:shadow-lg hover:-translate-y-0.5 transition">
+            <h2 className="text-lg font-semibold text-[#49596B] mb-4">
               Add a New Habit
             </h2>
             <HabitForm onAdded={handleHabitAdded} />
           </div>
 
           {/* Habit List */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-md p-6 border border-[#7A8450]/10 hover:shadow-lg hover:-translate-y-0.5 transition">
-            <h2 className="text-lg font-semibold text-[#7A8450] mb-4">
+          <div className="bg-white rounded-2xl shadow-md p-6 border border-[#49596B]/10 hover:shadow-lg hover:-translate-y-0.5 transition">
+            <h2 className="text-lg font-semibold text-[#49596B] mb-4">
               Your Habits
             </h2>
             <HabitList habits={habits} onDeleted={handleHabitDeleted} />
@@ -63,8 +63,8 @@ export default function HomePage() {
         </div>
 
         {/* Monthly Tracker */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-md p-6 border border-[#7A8450]/10 hover:shadow-lg hover:-translate-y-0.5 transition">
-          <h2 className="text-lg font-semibold text-[#7A8450] mb-4">
+        <div className="bg-white rounded-2xl shadow-md p-6 border border-[#49596B]/10 hover:shadow-lg hover:-translate-y-0.5 transition">
+          <h2 className="text-lg font-semibold text-[#49596B] mb-4">
             Monthly Progress
           </h2>
           <MonthlyTracker habits={habits} />

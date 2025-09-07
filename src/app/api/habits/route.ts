@@ -29,7 +29,8 @@ export async function GET() {
 
 // CREATE a new habit for the logged-in user
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
+  try{
+    const session = await getServerSession(authOptions);
 
   if (!session?.user?.email) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
@@ -54,4 +55,7 @@ export async function POST(req: Request) {
   });
 
   return NextResponse.json(habit, { status: 201 });
+  } catch(err){
+    return NextResponse.json(err, { status: 500 });
+  }
 }

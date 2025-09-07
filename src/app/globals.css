@@ -1,6 +1,14 @@
 @import "tailwindcss";
 
 /* globals.css */
+/* globals.css */
+
+html,
 body {
-  @apply bg-[#F8EFDA]; /* your vanilla/matcha-beige shade */
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #F2F0E9; /* Bone */
+  color: #49596B;           /* Marian */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }

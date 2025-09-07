@@ -15,22 +15,22 @@ export default function ProgressChart({
   data: { day: number; progress: number }[];
 }) {
   return (
-    <div className="w-full h-72 bg-[#F8DCD9]/40 rounded-2xl shadow-md p-6 mt-6">
-      <h3 className="text-lg font-semibold text-[#7A8450] mb-4">
+    <div className="w-full h-72 bg-[#FAFAF7] rounded-2xl shadow-md p-6 mt-6 border border-[#49596B]/20">
+      <h3 className="text-lg font-semibold text-[#49596B] mb-4">
         Daily Progress
       </h3>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#CBD5E1" /> 
           <XAxis
             dataKey="day"
             label={{
               value: "Day",
               position: "insideBottom",
               offset: -5,
-              style: { fill: "#7A8450", fontSize: 12 },
+              style: { fill: "#49596B", fontSize: 12 },
             }}
-            tick={{ fontSize: 12, fill: "#7A8450" }}
+            tick={{ fontSize: 12, fill: "#49596B" }}
           />
           <YAxis
             domain={[0, 100]}
@@ -38,25 +38,26 @@ export default function ProgressChart({
               value: "Progress %",
               angle: -90,
               position: "insideLeft",
-              style: { fill: "#7A8450", fontSize: 12 },
+              style: { fill: "#49596B", fontSize: 12 },
             }}
-            tick={{ fontSize: 12, fill: "#7A8450" }}
+            tick={{ fontSize: 12, fill: "#49596B" }}
           />
           <Tooltip
             formatter={(value: any) => `${value}%`}
             contentStyle={{
-              backgroundColor: "#F8DCD9",
+              backgroundColor: "#FAFAF7",
               borderRadius: "8px",
-              border: "1px solid #939D7A",
+              border: "1px solid #49596B",
+              color: "#49596B",
             }}
           />
           <Line
-            type="monotone" // 👈 smooth curved line
+            type="monotone"
             dataKey="progress"
-            stroke="#939D7A" // Moss Green
+            stroke="#49596B"
             strokeWidth={3}
-            dot={{ r: 4, fill: "#7A8450" }}
-            activeDot={{ r: 6, stroke: "#F8DCD9", strokeWidth: 2 }}
+            dot={{ r: 4, fill: "#49596B" }}
+            activeDot={{ r: 6, stroke: "#FAFAF7", strokeWidth: 2 }}
           />
         </LineChart>
       </ResponsiveContainer>

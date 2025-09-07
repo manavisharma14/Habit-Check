@@ -10,7 +10,7 @@ export default function HabitList({
 }) {
   if (habits.length === 0) {
     return (
-      <p className="text-[#7A8450]/70 italic text-center py-4">
+      <p className="text-[#49596B]/70 italic text-center py-4">
         No habits added yet. Start by creating one above 🌱
       </p>
     );
