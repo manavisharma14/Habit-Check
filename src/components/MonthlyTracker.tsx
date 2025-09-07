@@ -80,6 +80,26 @@ export default function MonthlyTracker({
   };
 
   return (
+
+    <div>
+      <div className="flex items-center justify-between mb-6">
+  <h2 className="text-xl font-bold text-[#718355]">Monthly Tracker</h2>
+  <div className="flex items-center gap-2">
+    <select
+      value={month}
+      onChange={(e) => setMonth(Number(e.target.value))}
+      className="border border-[#B5C99A] rounded-lg px-3 py-2 text-sm bg-white text-[#718355] focus:ring-2 focus:ring-[#97A97C]"
+    >
+      {monthNames.map((m, i) => (
+        <option key={i} value={i}>
+          {m}
+        </option>
+      ))}
+    </select>
+    <span className="font-medium text-[#718355]">{year}</span>
+  </div>
+</div>
+    
     <div className="overflow-x-auto rounded-lg border border-[#B5C99A]/50">
   <div className="max-h-[500px] overflow-y-scroll">
     <table className="table-fixed w-full text-sm border-collapse">
@@ -163,6 +183,7 @@ export default function MonthlyTracker({
       </tbody>
     </table>
   </div>
+</div>
 </div>
   );
 }
