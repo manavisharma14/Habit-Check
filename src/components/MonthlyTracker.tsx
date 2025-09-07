@@ -174,7 +174,7 @@ export default function MonthlyTracker({
         </table>
       </div>
 
-      {/* Chart */}
+
       <div className="mt-8 bg-white rounded-xl shadow p-4 border border-gray-200">
         <ProgressChart data={chartData} />
       </div>
