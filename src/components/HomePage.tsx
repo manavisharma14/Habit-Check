@@ -5,15 +5,16 @@ import HabitList from "@/components/HabitList";
 import MonthlyTracker from "@/components/MonthlyTracker";
 
 export default function HomePage() {
-  const [habits, setHabits] = useState<any[]>([]);
+  const [habits, setHabits] = useState<{ id: string; name: string; completed?: boolean }[]>([]);
 
   const fetchHabits = async () => {
     try {
       const res = await fetch("/api/habits");
       const data = await res.json();
-      setHabits(data);
+      setHabits(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error("Error fetching habits:", err);
+      setHabits([]);
     }
   };
 
@@ -21,11 +22,11 @@ export default function HomePage() {
     fetchHabits();
   }, []);
 
-  const handleHabitAdded = (habit: any) => {
+  const handleHabitAdded = (habit: { id: string; name: string; completed?: boolean }) => {
     setHabits((prev) => [...prev, habit]);
   };
 
-  const handleHabitDeleted = (id: number) => {
+  const handleHabitDeleted = (id: string) => {   // ✅ id is string
     setHabits((prev) => prev.filter((h) => h.id !== id));
   };
 

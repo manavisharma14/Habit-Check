@@ -6,8 +6,8 @@ export default function HabitItem({
   habit,
   onDeleted,
 }: {
-  habit: { id: number; name: string; completed?: boolean };
-  onDeleted?: (id: number) => void;
+  habit: { id: string; name: string; completed?: boolean }; // ✅ id is string
+  onDeleted?: (id: string) => void; // ✅ id is string
 }) {
   const handleDeleteHabit = async () => {
     try {
@@ -17,7 +17,7 @@ export default function HabitItem({
 
       if (!res.ok) throw new Error("Failed to delete");
 
-      if (onDeleted) onDeleted(habit.id); // update UI immediately
+      if (onDeleted) onDeleted(habit.id); // ✅ string id
       toast.success("Habit deleted ✨");
     } catch (error) {
       console.error("Error deleting habit:", error);

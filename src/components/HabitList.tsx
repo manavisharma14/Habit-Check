@@ -6,7 +6,7 @@ export default function HabitList({
   onDeleted,
 }: {
   habits: any[];
-  onDeleted?: (id: number) => void;
+  onDeleted?: (id: string) => void; // ✅ string not number
 }) {
   if (habits.length === 0) {
     return (

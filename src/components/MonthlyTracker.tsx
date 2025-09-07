@@ -1,32 +1,87 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProgressChart from "../components/ProgressChart";
+
+// Build "YYYY-MM-DD" (UTC day key) for a given day in current view
+function toDayKey(year: number, month: number, day: number) {
+  const y = String(year);
+  const m = String(month + 1).padStart(2, "0"); // month is 0-based
+  const d = String(day).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
 
 export default function MonthlyTracker({
   habits,
 }: {
-  habits: { id: number; name: string }[];
+  habits: { id: string; name: string }[];
 }) {
   const today = new Date();
-  const [month, setMonth] = useState(today.getMonth());
-  const [year] = useState(today.getFullYear());
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const [month, setMonth] = useState(today.getUTCMonth());      // use UTC month
+  const [year] = useState(today.getUTCFullYear());              // use UTC year
+  const daysInMonth = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
 
   const monthNames = [
     "January","February","March","April","May","June",
     "July","August","September","October","November","December",
   ];
 
-  const [progress, setProgress] = useState<Record<number, Set<number>>>({});
+  // Map: habitId -> Set<dayNumber>
+  const [progress, setProgress] = useState<Record<string, Set<number>>>({});
 
-  const toggleDay = (habitId: number, day: number) => {
-    setProgress((prev) => {
-      const current = new Set(prev[habitId] || []);
-      current.has(day) ? current.delete(day) : current.add(day);
-      return { ...prev, [habitId]: current };
-    });
+  // Load saved progress from API
+  useEffect(() => {
+    const fetchProgress = async () => {
+      try {
+        const res = await fetch("/api/progress");
+        if (!res.ok) return;
+
+        const data = await res.json();
+        const grouped: Record<string, Set<number>> = {};
+
+        data.forEach((p: any) => {
+          // p.date is ISO; use UTC getters to avoid timezone shifts
+          const d = new Date(p.date);
+          const y = d.getUTCFullYear();
+          const m = d.getUTCMonth();
+          const day = d.getUTCDate();
+
+          if (y === year && m === month) {
+            if (!grouped[p.habitId]) grouped[p.habitId] = new Set();
+            grouped[p.habitId].add(day);
+          }
+        });
+
+        setProgress(grouped);
+      } catch (err) {
+        console.error("Error loading progress:", err);
+      }
+    };
+
+    fetchProgress();
+  }, [month, year]);
+
+  // Toggle day both locally + in DB (send dayKey to avoid any TZ ambiguity)
+  const toggleDay = async (habitId: string, day: number) => {
+    const dayKey = toDayKey(year, month, day);
+
+    try {
+      await fetch("/api/progress", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ habitId, dayKey }),
+      });
+
+      setProgress((prev) => {
+        const current = new Set(prev[habitId] || []);
+        current.has(day) ? current.delete(day) : current.add(day);
+        return { ...prev, [habitId]: current };
+      });
+    } catch (err) {
+      console.error("Error updating progress:", err);
+    }
   };
 
+  // Daily completion %
   const getDailyProgress = (day: number) => {
     let completed = 0;
     habits.forEach((h) => {
@@ -35,6 +90,7 @@ export default function MonthlyTracker({
     return Math.round((completed / habits.length) * 100) || 0;
   };
 
+  // Chart data
   const chartData = Array.from({ length: daysInMonth }, (_, i) => ({
     day: i + 1,
     progress: getDailyProgress(i + 1),
@@ -102,10 +158,10 @@ export default function MonthlyTracker({
                           width: `${dailyProgress}%`,
                           backgroundColor:
                             dailyProgress >= 70
-                              ? "#7A8450" // green
+                              ? "#7A8450"
                               : dailyProgress >= 30
-                              ? "#D9B650" // amber
-                              : "#F8DCD9", // rose
+                              ? "#D9B650"
+                              : "#F8DCD9",
                         }}
                       />
                     </div>
