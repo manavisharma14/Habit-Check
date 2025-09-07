@@ -27,7 +27,7 @@ export async function DELETE(
     const habit = await prisma.habit.delete({
       where: {
         id:id,
-        userId: user.id, // ✅ ensure only owner can delete
+        userId: user.id
       },
     });
 
