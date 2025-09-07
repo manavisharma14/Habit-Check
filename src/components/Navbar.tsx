@@ -25,12 +25,7 @@ export default function Navbar() {
           >
             Home
           </Link>
-          <Link
-            href="/tracker"
-            className="text-[#49596B] hover:text-[#6B7280] transition"
-          >
-            Tracker
-          </Link>
+
 
           {/* Loading state */}
           {status === "loading" && (
