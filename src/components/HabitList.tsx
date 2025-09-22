@@ -6,12 +6,12 @@ export default function HabitList({
   onDeleted,
 }: {
   habits: any[];
-  onDeleted?: (id: string) => void; // ✅ string not number
+  onDeleted?: (id: string) => void;
 }) {
   if (habits.length === 0) {
     return (
-      <p className="text-[#49596B]/70 italic text-center py-4">
-        No habits added yet. Start by creating one above 🌱
+      <p className="text-[#A8C686]/80 italic text-center py-4">
+        No habits added yet 🌱 — start by creating one above!
       </p>
     );
   }

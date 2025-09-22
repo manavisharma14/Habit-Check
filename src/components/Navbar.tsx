@@ -2,69 +2,95 @@
 
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // ❌ remove explicit "Loading…" text
+  // ✅ don’t render navbar links until status is settled
+  if (status === "loading") {
+    return null; // or return a shimmer if you want
+  }
 
   return (
-    <nav className="sticky top-0 z-50 bg-gradient-to-r from-[#F9FAFB] to-[#F3F4F6] shadow px-6 py-3 border-b border-[#B5C99A]/40 backdrop-blur-sm">
-      <div className="max-w-6xl mx-auto flex justify-between items-center">
+    <nav
+      className={`sticky top-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-white/70 backdrop-blur-lg shadow-md border-b border-[#A8C686]/30"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
         {/* Brand */}
         <Link
           href="/"
-          className="font-extrabold text-xl tracking-wide bg-gradient-to-r from-[#718355] to-[#B5C99A] bg-clip-text text-transparent"
+          className="font-extrabold text-2xl tracking-wide text-[#A8C686] 
+                     hover:scale-105 transition-transform duration-300"
         >
-          HabitCheck
+          HabitCheck 🍵
         </Link>
 
         {/* Nav Links */}
-        <div className="space-x-6 flex items-center">
+        <div className="flex items-center gap-6">
           <Link
             href="/"
-            className="text-[#49596B] hover:text-[#718355] transition"
+            className="relative text-[#374151] hover:text-[#A8C686] transition 
+                       after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] 
+                       after:w-0 after:bg-[#A8C686] hover:after:w-full after:transition-all after:duration-300"
           >
             Home
           </Link>
 
           <Link
             href="/progress"
-            className="text-[#49596B] hover:text-[#718355] transition"
+            className="relative text-[#374151] hover:text-[#A8C686] transition 
+                       after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] 
+                       after:w-0 after:bg-[#A8C686] hover:after:w-full after:transition-all after:duration-300"
           >
             Progress
           </Link>
 
-          {/* Loading */}
-          {status === "loading" && (
-            <span className="text-sm text-gray-400">Loading...</span>
-          )}
-
-          {/* Logged in */}
+          {/* Authenticated */}
           {status === "authenticated" && session?.user ? (
-            <div className="flex items-center gap-3">
-              <span className="text-[#49596B] font-medium">
+            <div className="flex items-center gap-4">
+              <span className="text-[#374151] font-medium">
                 {session.user.name || session.user.email}
               </span>
               <button
                 onClick={() => signOut()}
-                className="ml-2 px-3 py-1 rounded-lg bg-[#718355] text-white text-sm hover:bg-[#5f6d49] transition"
+                className="ml-2 px-4 py-1.5 rounded-full bg-gradient-to-r 
+                           from-[#A8C686] to-[#8FAE5F] text-white text-sm 
+                           hover:scale-105 active:scale-95 transition-transform shadow-sm"
               >
                 Logout
               </button>
             </div>
-          ) : null}
-
-          {/* Not logged in */}
-          {status === "unauthenticated" && (
+          ) : (
+            // Unauthenticated
             <>
               <Link
                 href="/login"
-                className="ml-4 px-3 py-1 rounded-lg bg-[#718355] text-white text-sm hover:bg-[#5f6d49] transition"
+                className="ml-4 px-4 py-1.5 rounded-full bg-gradient-to-r 
+                           from-[#A8C686] to-[#8FAE5F] text-white text-sm 
+                           hover:scale-105 active:scale-95 transition-transform shadow-sm"
               >
                 Login
               </Link>
               <Link
                 href="/register"
-                className="ml-2 px-3 py-1 rounded-lg bg-[#E9F5DB] text-[#49596B] text-sm hover:bg-[#DCEBC8] transition"
+                className="ml-2 px-4 py-1.5 rounded-full border border-[#A8C686]/60 
+                           text-[#374151] text-sm bg-white/70 hover:bg-white 
+                           hover:scale-105 active:scale-95 transition-transform shadow-sm"
               >
                 Register
               </Link>

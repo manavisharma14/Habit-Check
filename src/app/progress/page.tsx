@@ -58,19 +58,22 @@ export default function ProgressPage() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-extrabold text-[#718355] mb-4">
-        Progress Overview
+      <h1 className="text-3xl font-extrabold text-[#49596B] mb-2">
+        📊 Progress Overview
       </h1>
-      <p className="text-[#49596B]/80 mb-6">
-        See how your daily habit completion looks this month 🌱
+      <p className="text-[#49596B]/70 mb-6">
+        See how your daily habit completion looks this month 🌿
       </p>
 
-      <div className="bg-white rounded-2xl shadow-md p-6 border border-[#B5C99A]/40">
+      <div className="bg-white/70 backdrop-blur-md rounded-2xl shadow-md p-6 
+                      border border-[#A8C686]/40 transition hover:shadow-lg">
         {loading ? (
-          <p className="text-center text-[#49596B]/60">Loading your progress...</p>
+          <p className="text-center text-[#49596B]/60 animate-pulse">
+            Loading your progress...
+          </p>
         ) : chartData.length === 0 || habitsCount === 0 ? (
-          <p className="text-center text-[#49596B]/60">
-            No progress to show yet. Start building habits 🌿
+          <p className="text-center text-[#49596B]/70">
+            No progress to show yet — start building habits 🍵
           </p>
         ) : (
           <ProgressChart data={chartData} />

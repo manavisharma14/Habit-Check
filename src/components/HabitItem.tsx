@@ -26,17 +26,20 @@ export default function HabitItem({
   };
 
   return (
-    <div className="flex justify-between items-center p-3 border border-[#49596B]/20 bg-[#FAFAF7] rounded-lg mb-2 shadow-sm hover:shadow-md transition">
+    <div className="flex justify-between items-center p-3 
+                    border border-[#A8C686]/40 bg-[#F5F3EC] 
+                    rounded-lg mb-2 shadow-sm hover:shadow-md 
+                    transition">
       <span
-        className={`text-[#49596B] ${
-          habit.completed ? "line-through text-[#49596B]/50" : ""
+        className={`text-[#49596B] font-medium ${
+          habit.completed ? "line-through text-[#A8C686]/60" : ""
         }`}
       >
         {habit.name}
       </span>
       <button
         onClick={handleDeleteHabit}
-        className="ml-4 text-[#49596B] hover:text-[#334155] transition"
+        className="ml-4 text-[#A8C686] hover:text-[#7CA35E] transition"
       >
         <Trash2 size={18} />
       </button>

@@ -44,7 +44,7 @@ export default function HabitForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative flex gap-3 bg-[#F9FAFB] p-3 rounded-xl border border-[#B5C99A]/40 shadow-sm"
+      className="relative flex gap-3 bg-[#F5F3EC] p-3 rounded-xl border border-[#A8C686]/40 shadow-sm"
     >
       <input
         ref={inputRef}
@@ -52,22 +52,22 @@ export default function HabitForm({
         placeholder="✨ Add a new habit..."
         value={habit}
         onChange={(e) => setHabit(e.target.value)}
-        className="flex-1 border border-[#B5C99A]/50 rounded-lg px-3 py-2 bg-white 
+        className="flex-1 border border-[#A8C686]/50 rounded-lg px-3 py-2 bg-white/70 
                    text-[#49596B] placeholder:text-gray-400
-                   focus:outline-none focus:ring-2 focus:ring-[#718355]/40"
+                   focus:outline-none focus:ring-2 focus:ring-[#A8C686]/50"
       />
       <button
         type="submit"
-        className="relative bg-[#718355] hover:bg-[#5c6f44] text-white px-5 py-2 rounded-lg shadow-md 
+        className="relative bg-[#A8C686] hover:bg-[#8cbf73] text-white px-5 py-2 rounded-lg shadow-md 
                    transition-all active:scale-95"
       >
         Add
       </button>
 
-      {/* Cute Popover */}
+      {/* Popover */}
       {showPopover && (
         <div className="absolute right-1/2 translate-x-1/2 top-[-50px] 
-                        bg-white/90 border border-[#B5C99A]/40 shadow-md 
+                        bg-[#F5F3EC] border border-[#A8C686]/40 shadow-md 
                         px-4 py-2 rounded-lg text-sm text-[#49596B] animate-bounce">
           🌱 Please login to add habits
         </div>
